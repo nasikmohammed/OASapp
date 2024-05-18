@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "176962835843",
+    "project_id": "oas-app2",
+    "storage_bucket": "oas-app2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:176962835843:android:ce7e4766ffbfbd3b8992b6",
+        "android_client_info": {
+          "package_name": "com.example.oas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfeNTrHnGbfRp85B-5QS50jDEaW6g2Y9o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
