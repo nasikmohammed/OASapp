@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 class ControllerProvider extends ChangeNotifier {
   String imageurl = '';
@@ -20,6 +21,13 @@ class ControllerProvider extends ChangeNotifier {
   final servicecategorycontroller = TextEditingController();
   final servicebaseamountcontroller = TextEditingController();
   final servicedurationcontroller = TextEditingController();
+  // register
+  final fullname = TextEditingController();
+  final address = TextEditingController();
+  final occupation = TextEditingController();
+  final phone = TextEditingController();
+  final dob = TextEditingController();
+  final password = TextEditingController();
 
   pickimagefromgallery() async {
     ImagePicker imagePicker = ImagePicker();
@@ -47,7 +55,9 @@ class ControllerProvider extends ChangeNotifier {
     itembaseamountcontroller.clear();
     itemdurationcontroller.clear();
     imageurl = "";
-  }claerservicefield() {
+  }
+
+  claerservicefield() {
     servicetitlecontroller.clear();
     servicesummerycontroller.clear();
     servicedescriptioncontroller.clear();
@@ -55,5 +65,20 @@ class ControllerProvider extends ChangeNotifier {
     servicebaseamountcontroller.clear();
     servicedurationcontroller.clear();
     imageurl = "";
+  }
+
+  datepickfordob(context) async {
+    final DateTime? selecteddate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+    final formatteddate = DateFormat("dd/MM/yyyy").format(selecteddate!);
+
+    print(formatteddate);
+
+    dob.text = formatteddate.toString();
+    notifyListeners();
   }
 }

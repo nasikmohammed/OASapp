@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:myproject/components/my_textfield.dart';
+import 'package:myproject/models/userdetails.dart';
 import 'package:myproject/view/login.dart';
+import 'package:myproject/viewmodel/controller_provider.dart';
+import 'package:myproject/viewmodel/userstore.dart';
+import 'package:provider/provider.dart';
 
 class register extends StatefulWidget {
   const register({super.key});
@@ -9,11 +13,14 @@ class register extends StatefulWidget {
   State<register> createState() => _registerState();
 }
 
+Userstore _userstore = Userstore();
+
 class _registerState extends State<register> {
   @override
   Widget build(BuildContext context) {
+    final ctrl = Provider.of<ControllerProvider>(context);
     return Scaffold(
-      backgroundColor:Color.fromARGB(255, 255, 252, 225),
+      backgroundColor: Color.fromARGB(255, 255, 252, 225),
       body: ListView(
         children: [
           const SizedBox(
@@ -24,51 +31,95 @@ class _registerState extends State<register> {
             "Let's register now!",
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           )),
-          const MyTextField(hintText: "full name", obscureText: false),
+          MyTextField(
+            hintText: "full name",
+            obscureText: false,
+            controller: ctrl.fullname,
+          ),
           const SizedBox(
             height: 2,
           ),
-          const MyTextField(hintText: "address", obscureText: false),
+          MyTextField(
+            hintText: "address",
+            obscureText: false,
+            controller: ctrl.address,
+          ),
           const SizedBox(
             height: 2,
           ),
-          const MyTextField(hintText: "Occupation", obscureText: false),
+          MyTextField(
+            hintText: "Occupation",
+            obscureText: false,
+            controller: ctrl.occupation,
+          ),
           const SizedBox(
             height: 2,
           ),
-          const MyTextField(hintText: "Phone", obscureText: false),
+          MyTextField(
+            hintText: "Phone",
+            obscureText: false,
+            decoration: InputDecoration(
+                suffix: IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.abc_sharp,
+                      color: Colors.red,
+                    ))),
+            controller: ctrl.phone,
+          ),
           const SizedBox(
             height: 2,
           ),
-          const MyTextField(hintText: "Date of Birth", obscureText: false),
+          MyTextField(
+            sufix: IconButton(
+                onPressed: () {
+                  ctrl.datepickfordob(context);
+                },
+                icon: Icon(Icons.calendar_month_outlined)),
+            hintText: "Date of Birth",
+            obscureText: false,
+            controller: ctrl.dob,
+          ),
           const SizedBox(
             height: 2,
           ),
-          const MyTextField(hintText: "Password", obscureText: true),
-         
-
-
-          Row(mainAxisAlignment: MainAxisAlignment.center,
+          MyTextField(
+            hintText: "Password",
+            obscureText: true,
+            controller: ctrl.password,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const Login(),
-                  ));
+                  _userstore
+                      .adduserdetails(UserModel(
+                          fullname: ctrl.fullname.text,
+                          address: ctrl.address.text,
+                          occupation: ctrl.occupation.text,
+                          phone: ctrl.phone.text,
+                          dob: ctrl.dob.text,
+                          password: ctrl.password.text))
+                      .then(
+                    (value) {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const Login(),
+                      ));
+                    },
+                  );
                 },
-                child: const Text("Register",style: TextStyle(color: Color.fromARGB(255, 255, 252, 252)),),
                 style: ButtonStyle(
-                  
-                  backgroundColor:
-                      MaterialStateProperty.all(const Color.fromARGB(255, 166, 15, 15)),
+                  backgroundColor: WidgetStateProperty.all(
+                      const Color.fromARGB(255, 166, 15, 15)),
+                ),
+                child: const Text(
+                  "Register",
+                  style: TextStyle(color: Color.fromARGB(255, 255, 252, 252)),
                 ),
               ),
             ],
           ),
-
-
-          
-
         ],
       ),
     );
