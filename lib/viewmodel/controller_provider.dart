@@ -1,9 +1,13 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:myproject/view/home.dart';
+import 'package:myproject/view/otp.dart';
 
 class ControllerProvider extends ChangeNotifier {
   String imageurl = '';
@@ -12,7 +16,7 @@ class ControllerProvider extends ChangeNotifier {
   final itemsummerycontroller = TextEditingController();
   final itemdescriptioncontroller = TextEditingController();
   final itemcategorycontroller = TextEditingController();
-  final itembaseamountcontroller = TextEditingController();
+  TextEditingController itembaseamountcontroller = TextEditingController();
   final itemdurationcontroller = TextEditingController();
   //SERVICE
   final servicetitlecontroller = TextEditingController();
@@ -28,6 +32,10 @@ class ControllerProvider extends ChangeNotifier {
   final phone = TextEditingController();
   final dob = TextEditingController();
   final password = TextEditingController();
+  //Otp
+  final otp = TextEditingController();
+  //Bidvalue
+  TextEditingController bidvaluecontroller = TextEditingController();
 
   pickimagefromgallery() async {
     ImagePicker imagePicker = ImagePicker();
@@ -79,6 +87,21 @@ class ControllerProvider extends ChangeNotifier {
     print(formatteddate);
 
     dob.text = formatteddate.toString();
+    notifyListeners();
+  }
+
+  datepickforduration(context) async {
+    final DateTime? selectedtime = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+    final formattedtime = DateFormat("dd/MM/yyyy").format(selectedtime!);
+
+    print(formattedtime);
+
+    itemdurationcontroller.text = formattedtime.toString();
     notifyListeners();
   }
 }

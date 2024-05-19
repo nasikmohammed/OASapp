@@ -78,6 +78,11 @@ class __NewItemState extends State<NewItem> {
                     hintText: 'Base Amount',
                     obscureText: false),
                 MyTextField(
+                    sufix: IconButton(
+                        onPressed: () {
+                          ctrl.datepickforduration(context);
+                        },
+                        icon: Icon(Icons.calendar_month)),
                     controller: ctrl.itemdurationcontroller,
                     hintText: 'Duration',
                     obscureText: false),

@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
           create: (context) => Cart(),
           builder: (context, child) => const MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: register(),
+            home: NewItem(),
           ),
         ),
       ],

@@ -55,7 +55,7 @@ class Servicemodel {
   final String duration;
   final String baseamount;
   final String imagepath;
- 
+
   String? description;
 
   Servicemodel({
@@ -65,10 +65,9 @@ class Servicemodel {
     required this.baseamount,
     required this.imagepath,
     required this.category,
-    
     required this.duration,
   });
-   Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         //agent
 
         "servicetitle": title,
@@ -90,6 +89,19 @@ class Servicemodel {
       baseamount: json["servicebaseamount"],
       duration: json["serviceduration"],
       imagepath: json["serviceimagepath"],
+    );
+  }
+}
+
+class BidModel {
+  String? highestbid;
+  BidModel({required this.highestbid});
+  Map<String, dynamic> toJson() => {
+        "highestbid": highestbid,
+      };
+  factory BidModel.fromJson(Map<String, dynamic> json) {
+    return BidModel(
+      highestbid: json["highestbid"],
     );
   }
 }

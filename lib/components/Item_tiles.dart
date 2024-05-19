@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:myproject/viewmodel/bidstore.dart';
+import 'package:myproject/viewmodel/controller_provider.dart';
 
 // class ItemTiles extends StatefulWidget {
 //   final Items items;
@@ -159,7 +161,7 @@ class _ItemTilesState extends State<ItemTiles> {
 
   @override
   Widget build(BuildContext context) {
-    var cart = Provider.of<Cart>(context); // Access the Cart object
+    // Access the Cart object
 
     return Container(
       margin: const EdgeInsets.only(left: 23),
@@ -200,7 +202,7 @@ class _ItemTilesState extends State<ItemTiles> {
               GestureDetector(
                 onTap: () {
                   _showInputDialog(
-                      context, cart); // Pass the cart object to the dialog
+                      context); // Pass the cart object to the dialog
                 },
                 child: Container(
                   padding: const EdgeInsets.all(20),
@@ -224,16 +226,18 @@ class _ItemTilesState extends State<ItemTiles> {
     );
   }
 
-  Future<void> _showInputDialog(BuildContext context, Cart cart) async {
+  Future<void> _showInputDialog(
+    BuildContext context,
+  ) async {
     int? userInput = await showDialog<int>(
       context: context,
       builder: (BuildContext context) {
-        TextEditingController controller = TextEditingController();
-
+        final ctrl = Provider.of<ControllerProvider>(context);
+        Bidstore bidstore = Bidstore();
         return AlertDialog(
           title: const Text('Enter Value'),
           content: TextField(
-            controller: controller,
+            controller: ctrl.bidvaluecontroller,
             decoration: const InputDecoration(hintText: 'Enter your bid'),
             keyboardType: TextInputType.number,
           ),
@@ -246,11 +250,13 @@ class _ItemTilesState extends State<ItemTiles> {
             ),
             TextButton(
               onPressed: () {
-                int? value = int.tryParse(controller.text);
+                int? value = int.tryParse(ctrl.bidvaluecontroller.text);
                 if (value != null) {
                   setState(() {
                     enteredValue = value;
                   });
+                  bidstore.addBid(
+                      BidModel(highestbid: ctrl.bidvaluecontroller.text));
                   // Add item to cart here
                   //cart.addItemToCart(widget.item);
                   Navigator.pop(context);

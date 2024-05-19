@@ -1,7 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:myproject/components/my_textfield.dart';
 import 'package:myproject/models/userdetails.dart';
+import 'package:myproject/view/OGhome.dart';
+import 'package:myproject/view/home.dart';
 import 'package:myproject/view/login.dart';
+import 'package:myproject/view/otp.dart';
 import 'package:myproject/viewmodel/controller_provider.dart';
 import 'package:myproject/viewmodel/userstore.dart';
 import 'package:provider/provider.dart';
@@ -58,13 +62,6 @@ class _registerState extends State<register> {
           MyTextField(
             hintText: "Phone",
             obscureText: false,
-            decoration: InputDecoration(
-                suffix: IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.abc_sharp,
-                      color: Colors.red,
-                    ))),
             controller: ctrl.phone,
           ),
           const SizedBox(
@@ -92,22 +89,58 @@ class _registerState extends State<register> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
-                onPressed: () {
-                  _userstore
-                      .adduserdetails(UserModel(
-                          fullname: ctrl.fullname.text,
-                          address: ctrl.address.text,
-                          occupation: ctrl.occupation.text,
-                          phone: ctrl.phone.text,
-                          dob: ctrl.dob.text,
-                          password: ctrl.password.text))
-                      .then(
-                    (value) {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const Login(),
-                      ));
+                onPressed: () async {
+                  print(
+                      "verifyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+
+                  print(
+                      "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
+                  await FirebaseAuth.instance.verifyPhoneNumber(
+                      verificationCompleted: (PhoneAuthCredential credential) {
+                        print(
+                            "pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp");
+                      },
+                      verificationFailed: (FirebaseAuthException ex) {
+                        print(
+                            "verrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+                      },
+                      codeSent: (String verificationid, int? resendtoken) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ScreenOtp(
+                                verificationid: verificationid,
+                              ),
+                            ));
+                      },
+                      codeAutoRetrievalTimeout: (String verificationid) {},
+                      phoneNumber: ctrl.phone.text.toString());
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) {
+                      return ScreenOtp(
+                        verificationid: ctrl.otp.text,
+                      );
                     },
-                  );
+                  ));
+                  print("After ffffffffffffffffffffffffffffffffffffffunction");
+
+                  // _userstore
+                  //     .adduserdetails(UserModel(
+                  //         fullname: ctrl.fullname.text,
+                  //         address: ctrl.address.text,
+                  //         occupation: ctrl.occupation.text,
+                  //         phone: ctrl.phone.text,
+                  //         dob: ctrl.dob.text,
+                  //         password: ctrl.password.text))
+                  //     .then(
+                  //   (value) {
+                  //     Navigator.of(context).push(MaterialPageRoute(
+                  //       builder: (context) => HomeP(
+                  //         currentIndex: 0,
+                  //       ),
+                  //     ));
+                  //   },
+                  // );
                 },
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all(

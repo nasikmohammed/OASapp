@@ -20,17 +20,68 @@
 //             color: const Color.fromARGB(255, 177, 177, 177),
 //             borderRadius: BorderRadius.circular(4),
 //           ),
-         
-//         ),
 
+//         ),
 
 //       ],),
 //     );
 //   }
 // }
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class Search extends StatelessWidget {
+class Search extends StatefulWidget {
+  @override
+  State<Search> createState() => _SearchState();
+}
+
+class _SearchState extends State<Search> {
+  List _allresult = [];
+  List _resultlist = [];
+
+  TextEditingController _serchcontroller = TextEditingController();
+  getclientstream() async {
+    var data = await FirebaseFirestore.instance
+        .collection("Items")
+        .orderBy("title")
+        .get();
+    setState(() {
+      _allresult = data.docs;
+    });
+  }
+
+  serchresultlist() {
+    var showresult = [];
+    if (_serchcontroller.text != "") {
+      for (var clintsnapshot in _allresult);
+    } else {
+      showresult = List.from(_allresult);
+    }
+  }
+
+  @override
+  void initState() {
+    _serchcontroller.addListener(_onserchchanged);
+    super.initState();
+  }
+
+  _onserchchanged() {
+    print(_serchcontroller.text);
+  }
+
+  @override
+  void dispose() {
+    _serchcontroller.removeListener(_onserchchanged);
+    _serchcontroller.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    getclientstream();
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -42,7 +93,8 @@ class Search extends StatelessWidget {
             color: Colors.white,
             borderRadius: BorderRadius.circular(8),
           ),
-          child: const TextField(
+          child: TextField(
+            controller: _serchcontroller,
             decoration: InputDecoration(
               hintText: 'Search',
               hintStyle: TextStyle(color: Colors.grey),
@@ -51,6 +103,16 @@ class Search extends StatelessWidget {
             ),
           ),
         ),
+        Expanded(
+          child: ListView.builder(
+            itemCount: _allresult.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(_allresult[index]['title']),
+              );
+            },
+          ),
+        )
       ],
     );
   }
