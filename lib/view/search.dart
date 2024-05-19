@@ -29,6 +29,7 @@
 // }
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Search extends StatefulWidget {
   @override
@@ -48,15 +49,24 @@ class _SearchState extends State<Search> {
     setState(() {
       _allresult = data.docs;
     });
+    serchresultlist();
   }
 
   serchresultlist() {
     var showresult = [];
     if (_serchcontroller.text != "") {
-      for (var clintsnapshot in _allresult);
+      for (var clintsnapshot in _allresult) {
+        var title = clintsnapshot['title'].toString().toLowerCase();
+        if (title.contains(_serchcontroller.text.toLowerCase())) {
+          showresult.add(clintsnapshot);
+        }
+      }
     } else {
       showresult = List.from(_allresult);
     }
+    setState(() {
+      _resultlist = showresult;
+    });
   }
 
   @override
@@ -66,6 +76,7 @@ class _SearchState extends State<Search> {
   }
 
   _onserchchanged() {
+    serchresultlist();
     print(_serchcontroller.text);
   }
 
@@ -95,7 +106,7 @@ class _SearchState extends State<Search> {
           ),
           child: TextField(
             controller: _serchcontroller,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Search',
               hintStyle: TextStyle(color: Colors.grey),
               border: InputBorder.none,
@@ -103,12 +114,40 @@ class _SearchState extends State<Search> {
             ),
           ),
         ),
+        const SizedBox(
+          height: 20,
+        ),
         Expanded(
           child: ListView.builder(
-            itemCount: _allresult.length,
+            itemCount: _resultlist.length,
             itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(_allresult[index]['title']),
+              return Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10),
+                child: Card(
+                  color: Color.fromARGB(255, 250, 248, 248),
+                  child: ListTile(
+                    title: Text(
+                      _resultlist[index]['title'],
+                      style: GoogleFonts.exo(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.green),
+                    ),
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        _resultlist[index]['imagepath'],
+                      ),
+                    ),
+                    trailing: Text(
+                      _resultlist[index]['Duration'],
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    subtitle: Text(
+                      _resultlist[index]['summary'],
+                    ),
+                    onTap: () {},
+                  ),
+                ),
               );
             },
           ),

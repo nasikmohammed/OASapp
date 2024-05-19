@@ -4,6 +4,7 @@ import 'package:myproject/firebase_options.dart';
 import 'package:myproject/models/itemcart.dart';
 import 'package:myproject/view/login.dart';
 import 'package:myproject/view/newitem.dart';
+import 'package:myproject/view/profile.dart';
 import 'package:myproject/view/register.dart';
 import 'package:myproject/viewmodel/controller_provider.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
           create: (context) => Cart(),
           builder: (context, child) => const MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: NewItem(),
+            home: Profile(),
           ),
         ),
       ],
