@@ -1,21 +1,27 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:myproject/models/userdetails.dart';
 import 'package:myproject/view/home.dart';
-import 'package:myproject/view/otp.dart';
+import 'package:myproject/viewmodel/userstore.dart';
 
 class ControllerProvider extends ChangeNotifier {
   String imageurl = '';
+  FirebaseAuth auth = FirebaseAuth.instance;
+  Userstore userstore = Userstore();
+
   //ITEMS
   final itemtitlecontroller = TextEditingController();
   final itemsummerycontroller = TextEditingController();
   final itemdescriptioncontroller = TextEditingController();
   final itemcategorycontroller = TextEditingController();
+
   TextEditingController itembaseamountcontroller = TextEditingController();
   final itemdurationcontroller = TextEditingController();
   //SERVICE
@@ -32,10 +38,15 @@ class ControllerProvider extends ChangeNotifier {
   final phone = TextEditingController();
   final dob = TextEditingController();
   final password = TextEditingController();
+  final email = TextEditingController();
+
   //Otp
   final otp = TextEditingController();
   //Bidvalue
   TextEditingController bidvaluecontroller = TextEditingController();
+  //login
+  TextEditingController loginemail = TextEditingController();
+  TextEditingController loginpassword = TextEditingController();
 
   pickimagefromgallery() async {
     ImagePicker imagePicker = ImagePicker();
@@ -75,6 +86,10 @@ class ControllerProvider extends ChangeNotifier {
     imageurl = "";
   }
 
+  clearbid() {
+    bidvaluecontroller.clear();
+  }
+
   datepickfordob(context) async {
     final DateTime? selecteddate = await showDatePicker(
       context: context,
@@ -103,5 +118,98 @@ class ControllerProvider extends ChangeNotifier {
 
     itemdurationcontroller.text = formattedtime.toString();
     notifyListeners();
+  }
+
+  /////////////////////
+  Future signupwituser(context) async {
+    try {
+      await auth
+          .createUserWithEmailAndPassword(
+              email: email.text, password: password.text)
+          .then((value) {
+        String uid = value.user!.uid;
+
+        userstore
+            .adduserdetails(
+                UserModel(
+                    fullname: fullname.text,
+                    address: address.text,
+                    occupation: occupation.text,
+                    phone: phone.text,
+                    dob: dob.text,
+                    password: password.text,
+                    email: email.text,
+                    id: uid),
+                uid)
+            .then(
+          (value) {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => HomeP(
+                currentIndex: 0,
+              ),
+            ));
+          },
+        );
+
+        notifyListeners();
+      });
+    } on FirebaseAuthException catch (e) {
+      print(e.toString());
+    }
+  }
+
+  //loging with user
+  Loginwithuser(context) async {
+    print("object");
+    try {
+      await auth
+          .signInWithEmailAndPassword(
+              email: loginemail.text, password: loginpassword.text)
+          .then(
+        (credential) {
+          String id = credential.user!.uid;
+
+          print(id);
+          final snackBar = SnackBar(
+            backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+            content: Text(
+              "Login Succesfully",
+              style: GoogleFonts.sarabun(),
+            ),
+          );
+
+          // Display the Snackbar
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) {
+              return HomeP(
+                currentIndex: 0,
+              );
+            },
+          ));
+        },
+      );
+    } catch (e) {
+      print("ccccccccccccccccccccccccccccccc");
+      print(e.toString());
+      final snackBar = SnackBar(
+        backgroundColor: Colors.red,
+        content: Text(
+          "Check Your Emai and Password",
+          style: GoogleFonts.plusJakartaSans(),
+        ),
+        action: SnackBarAction(
+          label: 'Undo',
+          textColor: const Color.fromARGB(255, 0, 0, 0),
+          onPressed: () {
+            // Some code to undo the change.
+          },
+        ),
+      );
+
+      // Display the Snackbar
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
 }

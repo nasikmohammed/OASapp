@@ -6,23 +6,27 @@ class Items {
   final String expiry;
   final String baseamount;
   final String? imagepath;
-  int? maxbid;
+  final String? maxbid;
   String? detaileddescription;
+  final String? id;
+  final String? reportid;
 
   Items({
     required this.title,
     required this.summary,
     required this.expiry,
     required this.baseamount,
+    this.id,
+    this.reportid,
     this.imagepath,
     required this.category,
     this.maxbid,
     required this.detaileddescription,
   });
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson(docId) => {
         //agent
-
-        "title": title,
+        "id": id, "title": title,
+        "reportid": reportid,
         "summary": summary,
         "detaileddescription": detaileddescription,
 
@@ -35,6 +39,8 @@ class Items {
   factory Items.fromJson(Map<String, dynamic> json) {
     return Items(
       title: json["title"],
+      reportid: json["reportid"],
+      id: json["id"],
       summary: json["summary"],
       detaileddescription: json["detaileddescription"],
       category: json["category"],

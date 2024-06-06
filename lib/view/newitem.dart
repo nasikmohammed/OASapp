@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -9,6 +10,7 @@ import 'package:myproject/view/home.dart';
 import 'package:myproject/viewmodel/controller_provider.dart';
 import 'package:myproject/viewmodel/itemservice.dart';
 import 'package:provider/provider.dart';
+import 'package:random_string/random_string.dart';
 
 class NewItem extends StatefulWidget {
   const NewItem({Key? key}) : super(key: key);
@@ -88,16 +90,27 @@ class __NewItemState extends State<NewItem> {
                     obscureText: false),
                 GestureDetector(
                   onTap: () {
+                    print("objellllct");
+                    String reportid = FirebaseAuth.instance.currentUser!.uid;
+                    print("objjjjjjjjjjject");
+
+                    String id = randomAlphaNumeric(10);
                     items
-                        .additem(Items(
-                      title: ctrl.itemtitlecontroller.text,
-                      summary: ctrl.itemsummerycontroller.text,
-                      expiry: ctrl.itemdurationcontroller.text,
-                      baseamount: ctrl.itembaseamountcontroller.text,
-                      imagepath: imageurl,
-                      category: ctrl.itemcategorycontroller.text,
-                      detaileddescription: ctrl.itemdescriptioncontroller.text,
-                    ))
+                        .additem(
+                            Items(
+                                title: ctrl.itemtitlecontroller.text,
+                                summary: ctrl.itemsummerycontroller.text,
+                                expiry: ctrl.itemdurationcontroller.text,
+                                baseamount: 
+                                    ctrl.itembaseamountcontroller.text,
+                                imagepath: imageurl,
+                                category: ctrl.itemcategorycontroller.text,
+                                detaileddescription:
+                                    ctrl.itemdescriptioncontroller.text,
+                                reportid: reportid,
+                                id: id),
+                            reportid,
+                            id)
                         .then(
                       (value) {
                         Fluttertoast.showToast(

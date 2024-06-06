@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:myproject/components/my_textfield.dart';
@@ -25,7 +24,7 @@ class _NewServiceState extends State<NewService> {
   var imageurl = '';
   Servicestore _servicestore = Servicestore();
 
-  final ImagePicker _servpicker = ImagePicker();
+  
   @override
   Widget build(BuildContext context) {
     final ctrl = Provider.of<ControllerProvider>(context);

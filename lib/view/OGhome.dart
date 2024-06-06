@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:myproject/components/Item_tiles.dart';
 import 'package:myproject/components/service_tile.dart';
 import 'package:myproject/models/itemcart.dart';
-import 'package:myproject/models/items.dart';
 import 'package:provider/provider.dart';
 
 class Realhome extends StatefulWidget {
@@ -38,13 +37,6 @@ class _RealhomeState extends State<Realhome> {
                         fontSize: 20,
                       ),
                     ),
-                    Text(
-                      "see all",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue,
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -62,20 +54,21 @@ class _RealhomeState extends State<Realhome> {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return CircularProgressIndicator();
                     } else {
+                      final data = snapshot.requireData;
+
                       return ListView.builder(
-                        itemCount: snapshot.data!.docs.length,
+                        itemCount: data.size,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
-                          var title = snapshot.data!.docs[index]['title'];
-                          var summary = snapshot.data!.docs[index]['summary'];
+                          var title = data.docs[index]['title'];
+                          var summary = data.docs[index]['summary'];
                           var detaileddescription =
-                              snapshot.data!.docs[index]['detaileddescription'];
-                          var category = snapshot.data!.docs[index]['category'];
+                              data.docs[index]['detaileddescription'];
+                          var category = data.docs[index]['category'];
                           var baseamount =
-                              snapshot.data!.docs[index]['baseamount'];
-                          var duration = snapshot.data!.docs[index]['Duration'];
-                          var itemphoto =
-                              snapshot.data!.docs[index]['imagepath'];
+                              data.docs[index]['detaileddescription'];
+                          var duration = data.docs[index]['Duration'];
+                          var itemphoto = data.docs[index]['imagepath'];
 
                           // Items items = value.getItemList()[index];
 
@@ -139,7 +132,6 @@ class _RealhomeState extends State<Realhome> {
                   return SizedBox(
                     height: 290,
                     child: ListView.builder(
-                      shrinkWrap: true,
                       itemCount: snapshot.data!.docs.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
@@ -156,7 +148,10 @@ class _RealhomeState extends State<Realhome> {
                         var serviceduration =
                             snapshot.data!.docs[index]['serviceduration'];
                         var serviceimagepath = snapshot.data!.docs[index][''];
-
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        }
                         return ServiceTile(
                           imagepath: serviceimagepath,
                           title: servicetitle,

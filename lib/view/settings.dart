@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:myproject/view/profile.dart';
 import 'package:myproject/view/recnotif.dart';
 import 'package:myproject/view/userfeedback.dart';
 
@@ -31,47 +32,79 @@ class _settingsState extends State<settings> {
           SizedBox(
             height: 33,
           ),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => ScreenUserProfile(),
+              ));
+            },
+            child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8)),
+                height: 50,
+                width: 330,
+                child: Center(
+                    child: Text(
+                  'My profile',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ))),
+          ),
+          SizedBox(
+            height: 12,
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => ReciNotif(),
+              ));
+            },
+            child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8)),
+                height: 50,
+                width: 330,
+                child: Center(
+                    child: Text(
+                  'Notifications',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ))),
+          ),
+          SizedBox(
+            height: 12,
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => Userfeedback(),
+              ));
+            },
+            child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8)),
+                height: 50,
+                width: 330,
+                child: Center(
+                    child: Text(
+                  'Feedback',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ))),
+          ),
+          SizedBox(
+            height: 12,
+          ),
           Container(
-            decoration: BoxDecoration(color:Colors.white, borderRadius: BorderRadius.circular(8)),
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(8)),
               height: 50,
               width: 330,
-              child: Center(child: Text('My profile',style: TextStyle(fontWeight: FontWeight.bold),))),
-              SizedBox(height: 12,),
-          GestureDetector(
-              onTap: (){
-
-           Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => ReciNotif(),
-                ));
-        } ,
-            child: Container(
-              decoration: BoxDecoration(color:Colors.white, borderRadius: BorderRadius.circular(8)),
-                height: 50,
-                width: 330,
-                child: Center(child: Text('Notifications',style: TextStyle(fontWeight: FontWeight.bold),))),
-          ),
-              SizedBox(height: 12,),
-          GestureDetector(
-            onTap: (){
-
-           Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => Userfeedback(),
-                ));
-        } ,
-            child: Container(
-              decoration: BoxDecoration(color:Colors.white, borderRadius: BorderRadius.circular(8)),
-                height: 50,
-                width: 330,
-                child: Center(child: Text('Feedback',style: TextStyle(fontWeight: FontWeight.bold),))),
-          ),
-           SizedBox(height: 12,),
-         Container(
-            decoration: BoxDecoration(color:Colors.white, borderRadius: BorderRadius.circular(8)),
-              height: 50,
-              width: 330,
-              child: Center(child: Text('About Us',style: TextStyle(fontWeight: FontWeight.bold),))),
-     
-        
+              child: Center(
+                  child: Text(
+                'About Us',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ))),
         ],
       ),
     );

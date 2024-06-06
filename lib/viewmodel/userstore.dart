@@ -6,10 +6,10 @@ class Userstore
   final db = FirebaseFirestore.instance;
   final CollectionReference usercollection =
       FirebaseFirestore.instance.collection("User Details");
-  Future adduserdetails(UserModel usermodel) async {
-    final doc = db.collection("User Details").doc();
+  Future adduserdetails(UserModel usermodel,uid) async {
+    final doc = db.collection("User Details").doc(uid);
 
-    doc.set(usermodel.toJson());
+    doc.set(usermodel.toJson(uid));
   }
   
 }

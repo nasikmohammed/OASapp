@@ -178,27 +178,19 @@ class _ServiceTileState extends State<ServiceTile> {
             AspectRatio(
               aspectRatio: 14 / 9,
               child: Image.network(
-                 widget.imagepath,
-                   fit: BoxFit.contain,
-                  ),
+                widget.imagepath,
+                fit: BoxFit.contain,
+              ),
             ),
-            Text(
-                 widget.title,
-                style: const TextStyle(fontSize: 22)),
-            Text(
-                widget.description
-                ),
-            Text(
-                widget.duration
-                ),
+            Text(widget.title, style: const TextStyle(fontSize: 22)),
+            Text(widget.description),
+            Text(widget.duration),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
                   children: [
-                    Text(
-                         widget.baseamount
-                        ),
+                    Text(widget.baseamount),
                     if (enteredValue != null)
                       Text('Highest Bid: $enteredValue'),
                   ],

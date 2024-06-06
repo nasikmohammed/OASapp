@@ -2,10 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:myproject/components/my_textfield.dart';
 import 'package:myproject/models/userdetails.dart';
-import 'package:myproject/view/OGhome.dart';
 import 'package:myproject/view/home.dart';
-import 'package:myproject/view/login.dart';
-import 'package:myproject/view/otp.dart';
 import 'package:myproject/viewmodel/controller_provider.dart';
 import 'package:myproject/viewmodel/userstore.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +14,7 @@ class register extends StatefulWidget {
   State<register> createState() => _registerState();
 }
 
-Userstore _userstore = Userstore();
+Userstore userstore = Userstore();
 
 class _registerState extends State<register> {
   @override
@@ -81,6 +78,14 @@ class _registerState extends State<register> {
             height: 2,
           ),
           MyTextField(
+            hintText: "Email",
+            obscureText: false,
+            controller: ctrl.email,
+          ),
+          const SizedBox(
+            height: 2,
+          ),
+          MyTextField(
             hintText: "Password",
             obscureText: true,
             controller: ctrl.password,
@@ -90,57 +95,7 @@ class _registerState extends State<register> {
             children: [
               ElevatedButton(
                 onPressed: () async {
-                  print(
-                      "verifyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
-
-                  print(
-                      "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
-                  await FirebaseAuth.instance.verifyPhoneNumber(
-                      verificationCompleted: (PhoneAuthCredential credential) {
-                        print(
-                            "pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp");
-                      },
-                      verificationFailed: (FirebaseAuthException ex) {
-                        print(
-                            "verrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-                      },
-                      codeSent: (String verificationid, int? resendtoken) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ScreenOtp(
-                                verificationid: verificationid,
-                              ),
-                            ));
-                      },
-                      codeAutoRetrievalTimeout: (String verificationid) {},
-                      phoneNumber: ctrl.phone.text.toString());
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) {
-                      return ScreenOtp(
-                        verificationid: ctrl.otp.text,
-                      );
-                    },
-                  ));
-                  print("After ffffffffffffffffffffffffffffffffffffffunction");
-
-                  // _userstore
-                  //     .adduserdetails(UserModel(
-                  //         fullname: ctrl.fullname.text,
-                  //         address: ctrl.address.text,
-                  //         occupation: ctrl.occupation.text,
-                  //         phone: ctrl.phone.text,
-                  //         dob: ctrl.dob.text,
-                  //         password: ctrl.password.text))
-                  //     .then(
-                  //   (value) {
-                  //     Navigator.of(context).push(MaterialPageRoute(
-                  //       builder: (context) => HomeP(
-                  //         currentIndex: 0,
-                  //       ),
-                  //     ));
-                  //   },
-                  // );
+                  ctrl.signupwituser(context);
                 },
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all(
@@ -158,3 +113,35 @@ class _registerState extends State<register> {
     );
   }
 }
+
+//  print(
+//                       "verifyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+
+//                   print(
+//                       "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
+//                   await FirebaseAuth.instance.verifyPhoneNumber(
+//                       verificationCompleted: (PhoneAuthCredential credential) {
+//                         print(
+//                             "pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp");
+//                       },
+//                       verificationFailed: (FirebaseAuthException ex) {
+//                         print(
+//                             "verrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+//                       },
+//                       codeSent: (String verificationid, int? resendtoken) {
+//                         Navigator.push(
+//                             context,
+//                             MaterialPageRoute(
+//                               builder: (context) => HomeP(
+//                                 currentIndex: 0,
+//                               ),
+//                             ));
+//                       },
+//                       codeAutoRetrievalTimeout: (String verificationid) {},
+//                       phoneNumber: ctrl.phone.text.toString());
+//                   Navigator.of(context).push(MaterialPageRoute(
+//                     builder: (context) {
+//                       return HomeP(currentIndex: 0);
+//                     },
+//                   ));
+//                   print("After ffffffffffffffffffffffffffffffffffffffunction");

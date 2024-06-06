@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -179,9 +182,9 @@ class _ItemTilesState extends State<ItemTiles> {
               // onTap: () => Navigator.push(
               //   context,
               //   MaterialPageRoute(
-              //     builder: (context) => IndivItem(items: widget.item),
-              ///),
-              //),
+              //     builder: (context) => IndivItem(items:),
+              // ),
+              // ),
               child: Image.network(widget.itemimage, fit: BoxFit.contain),
             ),
           ),
@@ -232,41 +235,62 @@ class _ItemTilesState extends State<ItemTiles> {
     int? userInput = await showDialog<int>(
       context: context,
       builder: (BuildContext context) {
+        final CollectionReference item =
+            FirebaseFirestore.instance.collection("Items");
         final ctrl = Provider.of<ControllerProvider>(context);
         Bidstore bidstore = Bidstore();
-        return AlertDialog(
-          title: const Text('Enter Value'),
-          content: TextField(
-            controller: ctrl.bidvaluecontroller,
-            decoration: const InputDecoration(hintText: 'Enter your bid'),
-            keyboardType: TextInputType.number,
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                int? value = int.tryParse(ctrl.bidvaluecontroller.text);
-                if (value != null) {
-                  setState(() {
-                    enteredValue = value;
-                  });
-                  bidstore.addBid(
-                      BidModel(highestbid: ctrl.bidvaluecontroller.text));
-                  // Add item to cart here
-                  //cart.addItemToCart(widget.item);
-                  Navigator.pop(context);
-                } else {
-                  // Show error or handle invalid input
-                }
-              },
-              child: const Text('Bid'),
-            ),
-          ],
+        return StreamBuilder(
+          stream: item.snapshots(),
+          builder: (context, snapshot) {
+            var data = snapshot.data;
+
+            log(snapshot.data!.docs.toString());
+
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            }
+            return AlertDialog(
+              title: const Text('Enter Value'),
+              content: TextField(
+                controller: ctrl.bidvaluecontroller,
+                decoration: const InputDecoration(hintText: 'Enter your bid'),
+                keyboardType: TextInputType.number,
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    var basevalue = data!.docs.first['baseamount'];
+
+                    log(basevalue);
+
+                    int? value = int.tryParse(ctrl.bidvaluecontroller.text);
+
+                    if (value! > int.parse(basevalue)) {
+                      setState(() {
+                        enteredValue = value;
+                        log(enteredValue.toString());
+                      });
+                      bidstore.addBid(
+                          BidModel(highestbid: ctrl.bidvaluecontroller.text));
+                      ctrl.clearbid();
+                      // Add item to cart here
+                      //cart.addItemToCart(widget.item);
+                      Navigator.pop(context);
+                    } else {
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: const Text('Bid'),
+                ),
+              ],
+            );
+          },
         );
       },
     );

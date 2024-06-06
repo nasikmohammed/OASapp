@@ -1,4 +1,4 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:myproject/models/items.dart';
 
 class Cart extends ChangeNotifier {
@@ -9,23 +9,23 @@ class Cart extends ChangeNotifier {
         title: 'Jackfruit',
         summary: '4 ripe jackfruits for sale',
         expiry: '12/22/2022',
-        baseamount: '300 rs',
-       // imagepath: 'assets/jack.jpg',
+        baseamount: "",
+        // imagepath: 'assets/jack.jpg',
         detaileddescription: 'good',
         category: 'food'),
     Items(
         title: 'CB 350',
         summary: 'less used bike',
         expiry: '11/11/2011',
-        baseamount: '123332 rs',
-       // imagepath: 'assets/cbbike.jpg',
+        baseamount: "",
+        // imagepath: 'assets/cbbike.jpg',
         detaileddescription: 'fdsfsaf',
         category: 'weapons'),
     Items(
         title: 'Gramaphone',
         summary: 'vintage Item',
         expiry: '11/3/2024',
-        baseamount: '3313 rs',
+        baseamount: "",
         imagepath: 'assets/grama.jpg',
         detaileddescription: 'dsafdfafdasfdsf',
         category: 'food'),
@@ -39,7 +39,6 @@ class Cart extends ChangeNotifier {
         baseamount: '3399 rs',
         imagepath: 'assets/house.jpg',
         category: 'manual labor',
-       
         summery: "summery"),
     Servicemodel(
         title: 'make a software',
@@ -56,12 +55,10 @@ class Cart extends ChangeNotifier {
         baseamount: '90 rs',
         imagepath: 'assets/gard.jpg',
         category: 'aadf',
-        summery:
-            'naise river only crocs and piranhas and anacondas hehe')
+        summery: 'naise river only crocs and piranhas and anacondas hehe')
   ];
 
-
- List<Items> myAuctionedThings = [];
+  List<Items> myAuctionedThings = [];
 
 //get list of items for sale
   List<Items> getItemList() {
@@ -77,7 +74,7 @@ class Cart extends ChangeNotifier {
     return myAuctionedThings;
   }
 
-void addItemToCart(Items items){
-  myAuctionedThings.add(items);
-}
+  void addItemToCart(Items items) {
+    myAuctionedThings.add(items);
+  }
 }
