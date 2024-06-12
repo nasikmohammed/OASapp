@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:myproject/components/my_textfield.dart';
-import 'package:myproject/view/home.dart';
+import 'package:myproject/view/register.dart';
 import 'package:myproject/viewmodel/controller_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -65,7 +65,7 @@ class _LoginState extends State<Login> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   SizedBox(
                     height: 33,
                   ),
@@ -73,9 +73,15 @@ class _LoginState extends State<Login> {
                   SizedBox(
                     width: 5,
                   ),
-                  Text(
-                    'click here',
-                    style: TextStyle(color: Colors.blue),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) {
+                          return register();
+                        },
+                      ));
+                    },
+                    child: Text("Click Here"),
                   ),
                 ],
               ),

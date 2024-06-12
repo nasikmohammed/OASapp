@@ -7,6 +7,8 @@ class UserModel {
   final String password;
   final String email;
     final String? id;
+    final String? profile;
+
 
   
   
@@ -20,10 +22,12 @@ class UserModel {
     required this.phone,
     required this.dob,
     required this.password,
-    required this.email,
+    required this.email,    required this.profile,
+
   });
   Map<String, dynamic> toJson(docId) => {
         "fullname": fullname,
+         "profile": profile,
         "address": address,
         "occupation": occupation,
         "phone": phone,
@@ -39,7 +43,7 @@ class UserModel {
       occupation: json["occupation"],
       phone: json["phone"],
       dob: json["dob"],
-      password: json["password"],
+      password: json["password"],profile: json["profile"],
     );
   }
 }

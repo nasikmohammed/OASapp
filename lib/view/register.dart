@@ -32,6 +32,42 @@ class _registerState extends State<register> {
             "Let's register now!",
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           )),
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 10,
+              left: 100,
+              right: 100,
+            ),
+            child: InkWell(
+              onTap: () {
+                ctrl.pickuserprofileimage();
+              },
+              child: ctrl.profilepick.isNotEmpty
+                  ? Container(
+                      height: 150,
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 203, 197, 197),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(
+                          ctrl.profilepick,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    )
+                  : Container(
+                      height: 150,
+                      decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 224, 224, 212),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: const Icon(
+                        Icons.add_a_photo,
+                        size: 50,
+                      ),
+                    ),
+            ),
+          ),
           MyTextField(
             hintText: "full name",
             obscureText: false,
@@ -93,21 +129,27 @@ class _registerState extends State<register> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton(
-                onPressed: () async {
-                  ctrl.signupwituser(context);
-                },
-                style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(
-                      const Color.fromARGB(255, 166, 15, 15)),
-                ),
-                child: const Text(
-                  "Register",
-                  style: TextStyle(color: Color.fromARGB(255, 255, 252, 252)),
+              SizedBox(
+                width: 300,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    ctrl.signupwituser(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10))),
+                  child: const Text(
+                    "Register",
+                    style: TextStyle(color: Color.fromARGB(255, 255, 252, 252)),
+                  ),
                 ),
               ),
             ],
           ),
+          const SizedBox(
+            height: 30,
+          )
         ],
       ),
     );
