@@ -1,127 +1,4 @@
-// import 'package:flutter/material.dart';
-// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-// import 'package:myproject/models/items.dart';
 
-// class ServiceTile extends StatefulWidget {
-//   final Services services;
-//   ServiceTile({Key? key, required this.services}) : super(key: key);
-
-//   @override
-//   _ServiceTileState createState() => _ServiceTileState();
-// }
-
-// class _ServiceTileState extends State<ServiceTile> {
-//   int? enteredValue;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       margin: const EdgeInsets.only(left: 23),
-//       width: 200,
-//       decoration: BoxDecoration(
-//         color: Colors.grey[100],
-//         borderRadius: BorderRadius.circular(4),
-//       ),
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//           AspectRatio(
-//             aspectRatio: 14 / 9,
-//             child: Image.asset(
-//               widget.services.imagepath,
-//               fit: BoxFit.contain,
-//             ),
-//           ),
-//           Text(widget.services.name, style: const TextStyle(fontSize: 22)),
-//           Text(widget.services.description),
-//           Text(widget.services.expiry),
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: [
-//               Column(
-//                 children: [
-//                   Text(widget.services.budget),
-//                   if (enteredValue != null)
-//                     Text('Highest Bid: $enteredValue'),
-//                 ],
-//               ),
-//               GestureDetector(
-//                 onTap: () {
-//                   _showInputDialog(context);
-//                 },
-//                 child: Container(
-//                   padding: const EdgeInsets.all(20),
-//                   decoration: const BoxDecoration(
-//                     color: Colors.black,
-//                     borderRadius: BorderRadius.only(
-//                       topLeft: Radius.circular(12),
-//                       bottomRight: Radius.circular(12),
-//                     ),
-//                   ),
-//                   child: const Column(
-//                     mainAxisAlignment: MainAxisAlignment.center,
-//                     children: [
-//                       Icon(
-//                         FontAwesomeIcons.hammer,
-//                         color: Colors.white,
-//                       ),
-
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-
-//   Future<void> _showInputDialog(BuildContext context) async {
-//     int? userInput = await showDialog<int>(
-//       context: context,
-//       builder: (BuildContext context) {
-//         TextEditingController _controller = TextEditingController();
-
-//         return AlertDialog(
-//           title: Text('Enter Value'),
-//           content: TextField(
-//             controller: _controller,
-//             decoration: InputDecoration(hintText: 'Enter an integer value'),
-//             keyboardType: TextInputType.number,
-//           ),
-//           actions: [
-//             TextButton(
-//               onPressed: () {
-//                 Navigator.pop(context);
-//               },
-//               child: Text('Cancel'),
-//             ),
-//             TextButton(
-//               onPressed: () {
-//                 int? value = int.tryParse(_controller.text);
-//                 if (value != null) {
-//                   setState(() {
-//                     enteredValue = value;
-//                   });
-//                   Navigator.pop(context, value);
-//                 } else {
-//                   // Show error or handle invalid input
-//                 }
-//               },
-//               child: Text('OK'),
-//             ),
-//           ],
-//         );
-//       },
-//     );
-
-//     if (userInput != null) {
-//       // Handle the user input here, such as updating state or performing arithmetic operations
-//       print('User entered: $userInput');
-//     }
-//   }
-// }
 
 import 'package:flutter/material.dart';
 
@@ -136,7 +13,7 @@ class ServiceTile extends StatefulWidget {
   final String duration;
   final String imagepath;
 
-  ServiceTile(
+   ServiceTile(
       {Key? key,
       required this.title,
       required this.summery,
@@ -156,73 +33,62 @@ class _ServiceTileState extends State<ServiceTile> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      // onTap: () => Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => IndivService(
-      //       services: widget.services,
-      //     ),
-      //   ),
-      // ),
-      child: Container(
-        margin: const EdgeInsets.only(left: 23),
-        width: 200,
-        decoration: BoxDecoration(
-          color: Colors.grey[100],
-          borderRadius: BorderRadius.circular(4),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            AspectRatio(
-              aspectRatio: 14 / 9,
-              child: Image.network(
-                widget.imagepath,
-                fit: BoxFit.contain,
-              ),
+    return Container(
+      margin: const EdgeInsets.only(left: 23),
+      width: 200,
+      decoration: BoxDecoration(
+        color: Colors.grey[100],
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          AspectRatio(
+            aspectRatio: 14 / 9,
+            child: Image.network(
+              widget.imagepath,
+              fit: BoxFit.contain,
             ),
-            Text(widget.title, style: const TextStyle(fontSize: 22)),
-            Text(widget.description),
-            Text(widget.duration),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    Text(widget.baseamount),
-                    if (enteredValue != null)
-                      Text('Highest Bid: $enteredValue'),
-                  ],
-                ),
-                GestureDetector(
-                  onTap: () {
-                    _showInputDialog(context);
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: const BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(12),
-                        bottomRight: Radius.circular(12),
-                      ),
-                    ),
-                    child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Bid',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ],
+          ),
+          Text(widget.title, style: const TextStyle(fontSize: 22)),
+          Text(widget.description),
+          Text(widget.duration),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                children: [
+                  Text(widget.baseamount),
+                  if (enteredValue != null) Text('Highest Bid: $enteredValue'),
+                ],
+              ),
+              GestureDetector(
+                onTap: () {
+                  _showInputDialog(context);
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: const BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(12),
+                      bottomRight: Radius.circular(12),
                     ),
                   ),
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Bid',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

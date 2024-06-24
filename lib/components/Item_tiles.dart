@@ -7,131 +7,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:myproject/viewmodel/bidstore.dart';
 import 'package:myproject/viewmodel/controller_provider.dart';
 
-// class ItemTiles extends StatefulWidget {
-//   final Items items;
-//   ItemTiles({Key? key, required this.items}) : super(key: key);
-
-//   @override
-//   _ItemTilesState createState() => _ItemTilesState();
-// }
-
-// class _ItemTilesState extends State<ItemTiles> {
-//   int? enteredValue;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       margin: const EdgeInsets.only(left: 23),
-//       width: 200,
-//       decoration: BoxDecoration(
-//         color: Colors.grey[100],
-//         borderRadius: BorderRadius.circular(4),
-//       ),
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//           AspectRatio(
-//             aspectRatio: 14 / 9,
-//             child: GestureDetector(
-//               onTap: () => Navigator.push(
-//                 context,
-//                 MaterialPageRoute(
-//                   builder: (context) => IndivItem(
-//                     items: widget.items,
-//                   ),
-//                 ),
-//               ),
-//               child: Image.asset(widget.items.imagepath, fit: BoxFit.contain),
-//             ),
-//           ),
-//           Text(widget.items.name, style: const TextStyle(fontSize: 22)),
-//           Text(widget.items.description),
-//           Text(widget.items.expiry),
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: [
-//               Column(
-//                 children: [
-//                   Text(widget.items.basebid),
-//                   if (enteredValue != null) Text('Highest Bid: $enteredValue'),
-//                 ],
-//               ),
-//               GestureDetector(
-//                 onTap: () {
-//                   _showInputDialog(context);
-//                 },
-//                 child: Container(
-//                   padding: const EdgeInsets.all(20),
-//                   decoration: const BoxDecoration(
-//                     color: Colors.black,
-//                     borderRadius: BorderRadius.only(
-//                       topLeft: Radius.circular(12),
-//                       bottomRight: Radius.circular(12),
-//                     ),
-//                   ),
-//                   child: Text(
-//                     'Bid',
-//                     style: TextStyle(color: Colors.white),
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-
-//   Future<void> _showInputDialog(BuildContext context) async {
-//     int? userInput = await showDialog<int>(
-//       context: context,
-//       builder: (BuildContext context) {
-//         TextEditingController controller = TextEditingController();
-
-//         return AlertDialog(
-//           title: const Text('Enter Value'),
-//           content: TextField(
-//             controller: controller,
-//             decoration: const InputDecoration(hintText: 'Enter your bid'),
-//             keyboardType: TextInputType.number,
-//           ),
-//           actions: [
-//             TextButton(
-//               onPressed: () {
-//                 Navigator.pop(context);
-//               },
-//               child: const Text('Cancel'),
-//             ),
-//             TextButton(
-//               onPressed: () {
-//                 int? value = int.tryParse(controller.text);
-//                 if (value != null) {
-//                   setState(() {
-//                     enteredValue = value;
-//                   });
-//                   Navigator.pop(context);
-//                 } else {
-//                   // Show error or handle invalid input
-//                 }
-//               },
-//               child: const Text('Bid'),
-//             ),
-//           ],
-//         );
-//       },
-//     );
-
-//     if (userInput != null) {
-//       // Handle the user input here, such as updating state or performing arithmetic operations
-//       print('User entered: $userInput');
-//     }
-//   }
-// }
-//-------------------------------------------------------
-
 import 'package:provider/provider.dart';
 import 'package:myproject/models/items.dart';
-import 'package:myproject/models/itemcart.dart'; // Import the Cart class
 
 class ItemTiles extends StatefulWidget {
   final String title;
@@ -141,11 +18,9 @@ class ItemTiles extends StatefulWidget {
   final String baseamount;
   final String summery;
   final String itemimage;
-  // final Items item;
 
   ItemTiles(
       {Key? key,
-      // required this.item,
       required this.title,
       required this.duration,
       required this.summery,
@@ -164,8 +39,6 @@ class _ItemTilesState extends State<ItemTiles> {
 
   @override
   Widget build(BuildContext context) {
-    // Access the Cart object
-
     return Container(
       margin: const EdgeInsets.only(left: 23),
       width: 200,
@@ -178,15 +51,9 @@ class _ItemTilesState extends State<ItemTiles> {
         children: [
           AspectRatio(
             aspectRatio: 14 / 9,
-            child: GestureDetector(
-              // onTap: () => Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => IndivItem(items:),
-              // ),
-              // ),
-              child: Image.network(widget.itemimage, fit: BoxFit.contain),
-            ),
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.network(widget.itemimage, fit: BoxFit.contain)),
           ),
           Text(widget.title,
               style: GoogleFonts.lobster(
@@ -216,7 +83,7 @@ class _ItemTilesState extends State<ItemTiles> {
                       bottomRight: Radius.circular(12),
                     ),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Bid',
                     style: TextStyle(color: Colors.white),
                   ),

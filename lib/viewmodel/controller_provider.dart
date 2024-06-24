@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:myproject/models/items.dart';
 import 'package:myproject/models/userdetails.dart';
 import 'package:myproject/view/home.dart';
 import 'package:myproject/viewmodel/userstore.dart';

@@ -65,8 +65,7 @@ class _RealhomeState extends State<Realhome> {
                           var detaileddescription =
                               data.docs[index]['detaileddescription'];
                           var category = data.docs[index]['category'];
-                          var baseamount =
-                              data.docs[index]['detaileddescription'];
+                          var baseamount = data.docs[index]['baseamount'];
                           var duration = data.docs[index]['Duration'];
                           var itemphoto = data.docs[index]['imagepath'];
 
@@ -122,49 +121,46 @@ class _RealhomeState extends State<Realhome> {
                 height: 12,
               ),
 
-              StreamBuilder(
-                stream: service.snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  }
+              SizedBox(
+                height: 290, // Set a fixed height for the ListView
+                child: StreamBuilder(
+                  stream: items.snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    } else {
+                      final data = snapshot.requireData;
 
-                  return SizedBox(
-                    height: 290,
-                    child: ListView.builder(
-                      itemCount: snapshot.data!.docs.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        var servicetitle =
-                            snapshot.data!.docs[index]['servicetitle'];
-                        var servicesummery =
-                            snapshot.data!.docs[index]['servicesummery'];
-                        var servicedescription =
-                            snapshot.data!.docs[index]['servicedescription'];
-                        var servicecategory =
-                            snapshot.data!.docs[index]['servicecategory'];
-                        var servicebaseamount =
-                            snapshot.data!.docs[index]['servicebaseamount'];
-                        var serviceduration =
-                            snapshot.data!.docs[index]['serviceduration'];
-                        var serviceimagepath = snapshot.data!.docs[index][''];
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return CircularProgressIndicator();
-                        }
-                        return ServiceTile(
-                          imagepath: serviceimagepath,
-                          title: servicetitle,
-                          summery: servicesummery,
-                          description: servicedescription,
-                          category: servicecategory,
-                          baseamount: servicebaseamount,
-                          duration: serviceduration,
-                        );
-                      },
-                    ),
-                  );
-                },
+                      return ListView.builder(
+                        itemCount: data.size,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          var title = data.docs[index]['title'];
+                          var summary = data.docs[index]['summary'];
+                          var detaileddescription =
+                              data.docs[index]['detaileddescription'];
+                          var category = data.docs[index]['category'];
+                          var baseamount = data.docs[index]['baseamount'];
+                          var duration = data.docs[index]['Duration'];
+                          var itemphoto = data.docs[index]['imagepath'];
+
+                          // Items items = value.getItemList()[index];
+
+                          return ItemTiles(
+                            itemimage: itemphoto,
+                            title: title,
+                            summery: summary,
+                            baseamount: baseamount,
+                            category: category,
+                            duration: duration,
+                            detaileddescription: detaileddescription,
+                            // item: items,
+                          );
+                        },
+                      );
+                    }
+                  },
+                ),
               ),
             ],
           ),

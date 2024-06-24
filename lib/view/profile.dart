@@ -148,7 +148,7 @@ class _ScreenUserProfileState extends State<ScreenUserProfile> {
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: [ 
                       Text(
                         "Address",
                         style: GoogleFonts.kalam(
