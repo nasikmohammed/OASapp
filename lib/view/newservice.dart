@@ -24,7 +24,6 @@ class _NewServiceState extends State<NewService> {
   var imageurl = '';
   Servicestore _servicestore = Servicestore();
 
-  
   @override
   Widget build(BuildContext context) {
     final ctrl = Provider.of<ControllerProvider>(context);
@@ -84,10 +83,19 @@ class _NewServiceState extends State<NewService> {
                   obscureText: false,
                   controller: ctrl.servicebaseamountcontroller,
                 ),
-                MyTextField(
-                  hintText: 'Duration',
-                  obscureText: false,
-                  controller: ctrl.servicedurationcontroller,
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 35, right: 35, bottom: 15),
+                  child: TextFormField(
+                    controller: ctrl.servicedurationcontroller,
+                    readOnly: true,
+                    onTap: () => ctrl.selectDateTimeforservice(context),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Duration',
+                      suffixIcon: Icon(Icons.calendar_month_outlined),
+                    ),
+                  ),
                 ),
                 GestureDetector(
                   onTap: () {

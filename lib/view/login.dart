@@ -75,11 +75,10 @@ class _LoginState extends State<Login> {
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) {
-                          return register();
-                        },
-                      ));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => register()),
+                      );
                     },
                     child: Text("Click Here"),
                   ),

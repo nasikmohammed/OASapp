@@ -79,15 +79,20 @@ class __NewItemState extends State<NewItem> {
                     controller: ctrl.itembaseamountcontroller,
                     hintText: 'Base Amount',
                     obscureText: false),
-                MyTextField(
-                    sufix: IconButton(
-                        onPressed: () {
-                          ctrl.datepickforduration(context);
-                        },
-                        icon: Icon(Icons.calendar_month)),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 35, right: 35, bottom: 15),
+                  child: TextFormField(
                     controller: ctrl.itemdurationcontroller,
-                    hintText: 'Duration',
-                    obscureText: false),
+                    readOnly: true,
+                    onTap: () => ctrl.selectDateTimeforitem(context),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Duration',
+                      suffixIcon: Icon(Icons.calendar_month_outlined),
+                    ),
+                  ),
+                ),
                 GestureDetector(
                   onTap: () {
                     print("objellllct");

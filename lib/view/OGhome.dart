@@ -18,7 +18,7 @@ class _RealhomeState extends State<Realhome> {
     final CollectionReference items =
         FirebaseFirestore.instance.collection("Items");
     final CollectionReference service =
-        FirebaseFirestore.instance.collection("Services");
+        FirebaseFirestore.instance.collection("Service");
 
     return Consumer<Cart>(
       builder: (context, value, child) => Scaffold(
@@ -26,7 +26,7 @@ class _RealhomeState extends State<Realhome> {
           child: Column(
             children: [
               const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 23),
+                padding: EdgeInsets.all(10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -89,14 +89,14 @@ class _RealhomeState extends State<Realhome> {
               ),
 
               const Padding(
-                padding: EdgeInsets.only(top: 80.0),
+                padding: EdgeInsets.only(top: 30),
                 child: Divider(
                   color: Color.fromARGB(255, 255, 255, 255),
                 ),
               ),
 
               const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 23),
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -122,38 +122,44 @@ class _RealhomeState extends State<Realhome> {
               ),
 
               SizedBox(
-                height: 290, // Set a fixed height for the ListView
+                height: 270, // Set a fixed height for the ListView
                 child: StreamBuilder(
-                  stream: items.snapshots(),
+                  stream: service.snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return CircularProgressIndicator();
                     } else {
-                      final data = snapshot.requireData;
+                      final servicedata = snapshot.requireData;
 
                       return ListView.builder(
-                        itemCount: data.size,
+                        itemCount: servicedata.size,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
-                          var title = data.docs[index]['title'];
-                          var summary = data.docs[index]['summary'];
-                          var detaileddescription =
-                              data.docs[index]['detaileddescription'];
-                          var category = data.docs[index]['category'];
-                          var baseamount = data.docs[index]['baseamount'];
-                          var duration = data.docs[index]['Duration'];
-                          var itemphoto = data.docs[index]['imagepath'];
+                          var servicetitle =
+                              servicedata.docs[index]['servicetitle'];
+                          var servicesummery =
+                              servicedata.docs[index]['servicesummery'];
+                          var servicedescription =
+                              servicedata.docs[index]['servicedescription'];
+                          var servicecategory =
+                              servicedata.docs[index]['servicecategory'];
+                          var servicebaseamount =
+                              servicedata.docs[index]['servicebaseamount'];
+                          var serviceduration =
+                              servicedata.docs[index]['serviceduration'];
+                          var serviceimagepath =
+                              servicedata.docs[index]['serviceimagepath'];
 
                           // Items items = value.getItemList()[index];
 
                           return ItemTiles(
-                            itemimage: itemphoto,
-                            title: title,
-                            summery: summary,
-                            baseamount: baseamount,
-                            category: category,
-                            duration: duration,
-                            detaileddescription: detaileddescription,
+                            itemimage: serviceimagepath,
+                            title: servicetitle,
+                            summery: servicesummery,
+                            baseamount: servicebaseamount,
+                            category: servicecategory,
+                            duration: serviceduration,
+                            detaileddescription: servicedescription,
                             // item: items,
                           );
                         },
@@ -162,6 +168,9 @@ class _RealhomeState extends State<Realhome> {
                   },
                 ),
               ),
+              const SizedBox(
+                height: 10,
+              )
             ],
           ),
         ),

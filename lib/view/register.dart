@@ -21,6 +21,14 @@ class _registerState extends State<register> {
   Widget build(BuildContext context) {
     final ctrl = Provider.of<ControllerProvider>(context);
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.arrow_circle_left_outlined)),
+        backgroundColor: Color.fromARGB(255, 255, 252, 225),
+      ),
       backgroundColor: Color.fromARGB(255, 255, 252, 225),
       body: ListView(
         children: [

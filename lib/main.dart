@@ -2,8 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:myproject/firebase_options.dart';
 import 'package:myproject/models/itemcart.dart';
+import 'package:myproject/testing_page.dart';
 import 'package:myproject/view/home.dart';
 import 'package:myproject/view/login.dart';
+import 'package:myproject/view/newservice.dart';
 import 'package:myproject/view/register.dart';
 
 import 'package:myproject/viewmodel/controller_provider.dart';
@@ -33,8 +35,8 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => Cart(),
-          builder: (context, child) =>
-              MaterialApp(debugShowCheckedModeBanner: false, home: Login()),
+          builder: (context, child) => MaterialApp(
+              debugShowCheckedModeBanner: false, home: NewService()),
         ),
       ],
     );

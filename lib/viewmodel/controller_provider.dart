@@ -122,21 +122,6 @@ class ControllerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  datepickforduration(context) async {
-    final DateTime? selectedtime = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-    );
-    final formattedtime = DateFormat("dd/MM/yyyy").format(selectedtime!);
-
-    print(formattedtime);
-
-    itemdurationcontroller.text = formattedtime.toString();
-    notifyListeners();
-  }
-
   /////////////////////
   Future signupwituser(context) async {
     try {
@@ -424,6 +409,84 @@ class ControllerProvider extends ChangeNotifier {
       notifyListeners();
     } catch (error) {
       print(error);
+    }
+  }
+
+  Future<void> selectDateTimeforservice(BuildContext context) async {
+    DateTime selectedDate = DateTime.now();
+    TimeOfDay selectedTime = TimeOfDay.now();
+
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+
+    if (pickedDate != null) {
+      selectedDate = pickedDate;
+
+      final TimeOfDay? pickedTime = await showTimePicker(
+        context: context,
+        initialTime: selectedTime,
+      );
+
+      if (pickedTime != null) {
+        selectedTime = pickedTime;
+
+        final DateTime finalDateTime = DateTime(
+          selectedDate.year,
+          selectedDate.month,
+          selectedDate.day,
+          selectedTime.hour,
+          selectedTime.minute,
+        );
+
+        final DateFormat formatter = DateFormat('dd/MM/yyyy h.mm a');
+        final String formattedDateTime = formatter.format(finalDateTime);
+
+        servicedurationcontroller.text = formattedDateTime;
+      }
+    }
+
+    //item
+  }
+
+  Future<void> selectDateTimeforitem(BuildContext context) async {
+    DateTime selectedDate = DateTime.now();
+    TimeOfDay selectedTime = TimeOfDay.now();
+
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+
+    if (pickedDate != null) {
+      selectedDate = pickedDate;
+
+      final TimeOfDay? pickedTime = await showTimePicker(
+        context: context,
+        initialTime: selectedTime,
+      );
+
+      if (pickedTime != null) {
+        selectedTime = pickedTime;
+
+        final DateTime finalDateTime = DateTime(
+          selectedDate.year,
+          selectedDate.month,
+          selectedDate.day,
+          selectedTime.hour,
+          selectedTime.minute,
+        );
+
+        final DateFormat formatter = DateFormat('dd/MM/yyyy h.mm a');
+        final String formattedDateTime = formatter.format(finalDateTime);
+
+        itemdurationcontroller.text = formattedDateTime;
+      }
     }
   }
 }
