@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:myproject/components/Item_tiles.dart';
 import 'package:myproject/components/service_tile.dart';
 import 'package:myproject/models/itemcart.dart';
+import 'package:myproject/view/newitem.dart';
+import 'package:myproject/view/newservice.dart';
 import 'package:provider/provider.dart';
 
 class Realhome extends StatefulWidget {
@@ -25,14 +28,14 @@ class _RealhomeState extends State<Realhome> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              const Padding(
+              Padding(
                 padding: EdgeInsets.all(10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Popular picks",
-                      style: TextStyle(
+                      "Popular items",
+                      style: GoogleFonts.mate(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
                       ),
@@ -51,8 +54,31 @@ class _RealhomeState extends State<Realhome> {
                 child: StreamBuilder(
                   stream: items.snapshots(),
                   builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
+                    if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                      return Container(
+                        color: const Color.fromARGB(255, 243, 213, 211),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Center(
+                                child: Text(' No Items ',
+                                    style: GoogleFonts.lobster(
+                                        fontSize: 35,
+                                        fontWeight: FontWeight.w400))),
+                            ElevatedButton.icon(
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) {
+                                    return NewItem();
+                                  },
+                                ));
+                              },
+                              label: Text("Add Items"),
+                              icon: Icon(Icons.add),
+                            )
+                          ],
+                        ),
+                      );
                     } else {
                       final data = snapshot.requireData;
 
@@ -95,23 +121,16 @@ class _RealhomeState extends State<Realhome> {
                 ),
               ),
 
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       "Popular services",
-                      style: TextStyle(
+                      style: GoogleFonts.mate(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
-                      ),
-                    ),
-                    Text(
-                      "see all",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue,
                       ),
                     ),
                   ],
@@ -126,8 +145,31 @@ class _RealhomeState extends State<Realhome> {
                 child: StreamBuilder(
                   stream: service.snapshots(),
                   builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
+                    if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                      return Container(
+                        color: const Color.fromARGB(255, 243, 213, 211),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Center(
+                                child: Text(' No Service ',
+                                    style: GoogleFonts.lobster(
+                                        fontSize: 35,
+                                        fontWeight: FontWeight.w400))),
+                            ElevatedButton.icon(
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) {
+                                    return NewService();
+                                  },
+                                ));
+                              },
+                              label: Text("Add Services"),
+                              icon: Icon(Icons.add),
+                            )
+                          ],
+                        ),
+                      );
                     } else {
                       final servicedata = snapshot.requireData;
 

@@ -29,6 +29,10 @@ class __NewItemState extends State<NewItem> {
     itemeService items = itemeService();
     final ctrl = Provider.of<ControllerProvider>(context);
     return Scaffold(
+        appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 255, 248, 227),
+          title: Text("items"),
+        ),
         backgroundColor: const Color.fromARGB(255, 255, 248, 227),
         body: ListView(
           children: [
@@ -106,8 +110,7 @@ class __NewItemState extends State<NewItem> {
                                 title: ctrl.itemtitlecontroller.text,
                                 summary: ctrl.itemsummerycontroller.text,
                                 expiry: ctrl.itemdurationcontroller.text,
-                                baseamount: 
-                                    ctrl.itembaseamountcontroller.text,
+                                baseamount: ctrl.itembaseamountcontroller.text,
                                 imagepath: imageurl,
                                 category: ctrl.itemcategorycontroller.text,
                                 detaileddescription:

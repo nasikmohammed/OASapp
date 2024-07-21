@@ -28,6 +28,10 @@ class _NewServiceState extends State<NewService> {
   Widget build(BuildContext context) {
     final ctrl = Provider.of<ControllerProvider>(context);
     return Scaffold(
+        appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 255, 248, 227),
+          title: Text("Service"),
+        ),
         backgroundColor: const Color.fromARGB(255, 255, 248, 227),
         body: ListView(
           children: [
